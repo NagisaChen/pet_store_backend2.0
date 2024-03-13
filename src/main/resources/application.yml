@@ -1,12 +1,21 @@
 spring:
-  security:
-    filter:
-      order: -100
-    jwt:
-      key: abcdefghij
-      expire: 7
-  datasource:
-    url: jdbc:mysql://localhost:3306/petstore2.0?serverTimezone=UTC&characterEncoding=utf8
-    username: root
-    password: 123456
-    driver-class-name: com.mysql.cj.jdbc.Driver
+    mail:
+      host: smtp.163.com
+      username: nagisachen@163.com
+      password: LWVMJSEMUFFTCWHD
+    rabbitmq:
+      addresses: localhost
+      username: admin
+      password: admin
+      virtual-host: /
+    security:
+      filter:
+        order: -100
+      jwt:
+        key: abcdefghij
+        expire: 7
+    datasource:
+      url: jdbc:mysql://localhost:3306/petstore2.0?serverTimezone=UTC&characterEncoding=utf8
+      username: root
+      password: 123456
+      driver-class-name: com.mysql.cj.jdbc.Driver

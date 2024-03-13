@@ -45,7 +45,7 @@ public class SecurityConfiguration {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         return http
                 .authorizeHttpRequests(conf -> conf
-                        .requestMatchers("/api/auth/**").permitAll()
+                        .requestMatchers("/api/auth/**", "/error").permitAll()
                         .anyRequest().authenticated()
                 )
                 .formLogin(conf -> conf
@@ -87,7 +87,6 @@ public class SecurityConfiguration {
         vo.setExpire(utils.expireTime());
         vo.setToken(token);
         response.getWriter().write(RestBean.success(vo).asJsonString());
-        System.out.println("111");
     }
 
     public void onAuthenticationFailure(HttpServletRequest request,
@@ -108,7 +107,6 @@ public class SecurityConfiguration {
         } else {
             writer.write(RestBean.failure(400,"退出登录失败").asJsonString());
         }
-        System.out.println(111);
     }
 
     public void onAccessDeny(HttpServletRequest request,
