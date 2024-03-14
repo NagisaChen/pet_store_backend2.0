@@ -89,6 +89,12 @@ public class AccountServiceImpl extends ServiceImpl<AccountMapper, Account> impl
         }
     }
 
+    /**
+     * 注册并创建一个新的电子邮件账户
+     *
+     * @param vo 包含注册信息的对象，包括用户名、密码、电子邮件地址和验证码
+     * @return 返回null表示注册成功，否则返回错误信息
+     */
     @Override
     public String registerEmailAccount(EmailRegisterVO vo) {
         // 从json中获取email信息

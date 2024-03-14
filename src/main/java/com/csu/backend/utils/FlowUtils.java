@@ -6,6 +6,7 @@ import org.springframework.stereotype.Component;
 
 import java.util.concurrent.TimeUnit;
 
+// 限流工具类，用于限制一段时间内邮件的发送
 @Component
 public class FlowUtils {
     @Resource

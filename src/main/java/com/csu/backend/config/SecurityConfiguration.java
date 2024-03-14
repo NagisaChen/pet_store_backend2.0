@@ -70,9 +70,17 @@ public class SecurityConfiguration {
                 .build();
     }
 
-
-
-
+    /**
+     * 当用户成功认证后调用此方法。
+     * 它设置响应类型和编码，获取已认证用户的详细信息，
+     * 为用户生成JWT令牌，并发送包含用户详细信息和令牌的成功响应。
+     *
+     * @param request 代表客户端请求的HttpServletRequest对象
+     * @param response 用于生成服务器响应的HttpServletResponse对象
+     * @param authentication 包含已认证用户详细信息的Authentication对象
+     * @throws IOException 如果发生输入或输出异常
+     * @throws ServletException 如果发生servlet异常
+     */
     public void onAuthenticationSuccess(HttpServletRequest request,
                                         HttpServletResponse response,
                                         Authentication authentication) throws IOException, ServletException {
@@ -89,6 +97,15 @@ public class SecurityConfiguration {
         response.getWriter().write(RestBean.success(vo).asJsonString());
     }
 
+    /**
+     * 当用户认证失败时调用此方法。
+     * 它设置响应类型和编码，然后发送一个包含错误信息的JSON响应。
+     *
+     * @param request 代表客户端请求的HttpServletRequest对象
+     * @param response 用于生成服务器响应的HttpServletResponse对象
+     * @param exception AuthenticationException对象，包含了导致认证失败的原因
+     * @throws IOException 如果在获取响应的Writer或者写入响应时发生IO错误，会抛出此异常
+     */
     public void onAuthenticationFailure(HttpServletRequest request,
                                         HttpServletResponse response,
                                         AuthenticationException exception) throws IOException {
@@ -98,6 +115,17 @@ public class SecurityConfiguration {
         response.getWriter().write(RestBean.unAuthorized(exception.getMessage()).asJsonString());
     }
 
+    /**
+     * 当用户成功登出时调用此方法。
+     * 它设置响应类型和编码，然后根据JWT令牌的有效性发送一个JSON响应。
+     * 如果令牌无效，则发送一个表示成功的响应，否则发送一个包含错误信息的响应。
+     *
+     * @param request 代表客户端请求的HttpServletRequest对象
+     * @param response 用于生成服务器响应的HttpServletResponse对象
+     * @param authentication 包含已认证用户详细信息的Authentication对象
+     * @throws IOException 如果在获取响应的Writer或者写入响应时发生IO错误，会抛出此异常
+     * @throws ServletException 如果发生servlet异常
+     */
     public void onLogoutSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
         response.setContentType("application/json;charset=utf-8");
         PrintWriter writer = response.getWriter();
@@ -109,6 +137,16 @@ public class SecurityConfiguration {
         }
     }
 
+    /**
+     * 当用户访问被拒绝时调用此方法。
+     * 它设置响应类型和编码，然后发送一个包含错误信息的JSON响应。
+     *
+     * @param request 代表客户端请求的HttpServletRequest对象
+     * @param response 用于生成服务器响应的HttpServletResponse对象
+     * @param accessDeniedException AccessDeniedException对象，包含了导致访问被拒绝的原因
+     * @throws IOException 如果在获取响应的Writer或者写入响应时发生IO错误，会抛出此异常
+     * @throws ServletException 如果发生servlet异常
+     */
     public void onAccessDeny(HttpServletRequest request,
                              HttpServletResponse response,
                              AccessDeniedException accessDeniedException) throws IOException, ServletException {

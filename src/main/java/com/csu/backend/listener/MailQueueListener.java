@@ -10,9 +10,7 @@ import org.springframework.stereotype.Component;
 
 import java.util.Map;
 
-/**
- *
- * */
+// 邮件队列监听器
 @Component
 @RabbitListener(queues = "mail")
 public class MailQueueListener {
@@ -24,8 +22,13 @@ public class MailQueueListener {
     String username;
 
     /**
+     * 使用RabbitMQ消息队列处理邮件发送的请求。
+     * 它从传入的数据中获取邮箱地址、验证码和消息类型。
+     * 根据消息类型，它创建一个邮件消息，然后发送这个消息。
+     * 如果消息类型不是"register"或"reset"，则不会发送任何消息。
      *
-     * */
+     * @param data 包含邮件信息的Map对象，包括邮箱地址、验证码和消息类型
+     */
     @RabbitHandler
     public void sendMailMessage(Map<String, Object> data) {
         // 获取邮箱
@@ -48,8 +51,14 @@ public class MailQueueListener {
     }
 
     /**
+     * 创建一个SimpleMailMessage对象，用于发送邮件。
+     * 它设置邮件的主题、内容、收件人和发件人。
      *
-     * */
+     * @param title 邮件的主题
+     * @param content 邮件的内容
+     * @param email 收件人的邮箱地址
+     * @return 创建的SimpleMailMessage对象
+     */
     private SimpleMailMessage createMessage(String title, String content, String email) {
         SimpleMailMessage message = new SimpleMailMessage();
         message.setSubject(title);
